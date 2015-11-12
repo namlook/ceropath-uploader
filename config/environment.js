@@ -1,11 +1,13 @@
 /* jshint node: true */
 
+var secretConfig = require('../secret.json');
+
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ceropath-data-uploader',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -16,8 +18,11 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      resources: ['Taxonomy', 'Individual', 'Site', 'Publication'],
+      secret: secretConfig.persistKey
     }
   };
+
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
@@ -25,6 +30,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.APP.ceropathHost = 'http://localhost:8888';
   }
 
   if (environment === 'test') {
@@ -40,8 +46,26 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.APP.ceropathHost = 'http://rdbsea.ceropath.org';
   }
+
+  ENV.contentSecurityPolicy = {
+    'default-src': "'none'",
+    'script-src': "'self' 'unsafe-inline'",
+    'font-src': "'self'",
+    'connect-src': "'self' "+ENV.APP.ceropathHost,
+    'img-src': "'self'",
+    'style-src': "'self' 'unsafe-inline'",
+    'media-src': "'self'"
+  };
+
+  ENV.emberOffline = {
+    checks: {
+      xhr: {
+        url: ENV.APP.ceropathHost
+      }
+    }
+  };
 
   return ENV;
 };
