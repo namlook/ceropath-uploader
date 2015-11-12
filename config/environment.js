@@ -4,7 +4,7 @@ var secretConfig = require('../secret.json');
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'ceropath-data-uploader',
+    modulePrefix: 'ceropath-uploader',
     environment: environment,
     baseURL: '/',
     locationType: 'hash',

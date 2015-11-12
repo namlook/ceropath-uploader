@@ -1,7 +1,7 @@
 {
-  "name": "ceropath-data-uploader",
+  "name": "ceropath-uploader",
   "version": "0.0.0",
-  "description": "Small description for ceropath-data-uploader goes here",
+  "description": "An OSX tool for uploading data in Ceropath",
   "private": true,
   "directories": {
     "doc": "doc",
